@@ -9,7 +9,7 @@ phases:
       - export PATH=$PWD/:$PATH
       - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
       - chmod +x ./install-helm.sh
-      - ./install-helm.sh | bash
+      - ./install-helm.sh
       - which helm
 
   pre_build:
