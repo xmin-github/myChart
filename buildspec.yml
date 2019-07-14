@@ -19,7 +19,7 @@ phases:
       - helm init --client-only
   build:
     commands:
-      - echo "build...."
+      - ls ./
 
   post_build:
     commands:
