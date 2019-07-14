@@ -8,7 +8,9 @@ phases:
       - chmod +x ./kubectl ./aws-iam-authenticator
       - export PATH=$PWD/:$PATH
       - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
-      - curl -L https://git.io/get_helm.sh | bash
+      - chmod +x ./install-helm.sh
+      - ./install-helm.sh
+      - which helm
 
   pre_build:
     commands:
@@ -16,10 +18,10 @@ phases:
       #- sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' hello-k8s.yml
       #- $(aws ecr get-login --no-include-email)
       - export KUBECONFIG=$HOME/.kube/config
-      - helm init --client-only
+      - helm init --upgrade --client-only
   build:
     commands:
-      - ls ./
+      - ls -la ./
 
   post_build:
     commands:
