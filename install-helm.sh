@@ -18,7 +18,7 @@
 # the package manager for Go: https://github.com/Masterminds/glide.sh/blob/master/get
 
 PROJECT_NAME="helm"
-TILLER_NAME=""
+TILLER_NAME="tiller"
 
 : ${USE_SUDO:="true"}
 : ${HELM_INSTALL_DIR:="/usr/local/bin"}
@@ -147,12 +147,12 @@ installFile() {
   echo "Preparing to install $PROJECT_NAME and $TILLER_NAME into ${HELM_INSTALL_DIR}"
   runAsRoot cp "$HELM_TMP_BIN" "$HELM_INSTALL_DIR"
   echo "$PROJECT_NAME installed into $HELM_INSTALL_DIR/$PROJECT_NAME"
-  if [ -x "$TILLER_TMP_BIN" ]; then
-    runAsRoot cp "$TILLER_TMP_BIN" "$HELM_INSTALL_DIR"
-    echo "$TILLER_NAME installed into $HELM_INSTALL_DIR/$TILLER_NAME"
-  else
-    echo "info: $TILLER_NAME binary was not found in this release; skipping $TILLER_NAME installation"
-  fi
+  #if [ -x "$TILLER_TMP_BIN" ]; then
+  #  runAsRoot cp "$TILLER_TMP_BIN" "$HELM_INSTALL_DIR"
+  #  echo "$TILLER_NAME installed into $HELM_INSTALL_DIR/$TILLER_NAME"
+  #else
+  #  echo "info: $TILLER_NAME binary was not found in this release; skipping $TILLER_NAME installation"
+  #fi
 }
 
 # fail_trap is executed if an error occurs.
