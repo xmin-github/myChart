@@ -31,7 +31,7 @@ phases:
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
-      - helm upgrade example ./firstchart --install --set service.type=LoadBalancer
-      - printf '[{"message":"after helm install"]' > build.json
+      - ./install-service.sh
+      
 artifacts:
   files: build.json
