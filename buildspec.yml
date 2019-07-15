@@ -9,6 +9,7 @@ phases:
       - export PATH=$PWD/:$PATH
       - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
       - chmod +x ./install-helm.sh
+      - chmod +x ./install-service.sh
       - ./install-helm.sh
       - which helm
 
@@ -32,6 +33,6 @@ phases:
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       - ./install-service.sh
-      
+
 artifacts:
   files: build.json
