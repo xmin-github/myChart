@@ -19,13 +19,14 @@ phases:
       #- sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' hello-k8s.yml
       #- $(aws ecr get-login --no-include-email)
       - export KUBECONFIG=$HOME/.kube/config
-      - helm init --upgrade --client-only
+      - helm init --service-account tiller --upgrade
   build:
     commands:
       - ls -la ./
 
   post_build:
     commands:
+      - echo $EKS_KUBECTL_ROLE_ARN
       - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
       - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
