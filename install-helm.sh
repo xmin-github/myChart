@@ -17,8 +17,9 @@
 # The install script is based off of the MIT-licensed script from glide,
 # the package manager for Go: https://github.com/Masterminds/glide.sh/blob/master/get
 
+#This is script only install helm client
 PROJECT_NAME="helm"
-TILLER_NAME="tiller"
+#TILLER_NAME="tiller"
 
 : ${USE_SUDO:="true"}
 : ${HELM_INSTALL_DIR:="/usr/local/bin"}
@@ -143,8 +144,9 @@ installFile() {
   mkdir -p "$HELM_TMP"
   tar xf "$HELM_TMP_FILE" -C "$HELM_TMP"
   HELM_TMP_BIN="$HELM_TMP/$OS-$ARCH/$PROJECT_NAME"
-  TILLER_TMP_BIN="$HELM_TMP/$OS-$ARCH/$TILLER_NAME"
-  echo "Preparing to install $PROJECT_NAME and $TILLER_NAME into ${HELM_INSTALL_DIR}"
+  #TILLER_TMP_BIN="$HELM_TMP/$OS-$ARCH/$TILLER_NAME"
+  #echo "Preparing to install $PROJECT_NAME and $TILLER_NAME into ${HELM_INSTALL_DIR}"
+  echo "Preparing to install $PROJECT_NAME into ${HELM_INSTALL_DIR}"
   runAsRoot cp "$HELM_TMP_BIN" "$HELM_INSTALL_DIR"
   echo "$PROJECT_NAME installed into $HELM_INSTALL_DIR/$PROJECT_NAME"
   #if [ -x "$TILLER_TMP_BIN" ]; then
