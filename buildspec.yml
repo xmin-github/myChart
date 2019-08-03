@@ -26,6 +26,7 @@ phases:
 
   post_build:
     commands:
+      - kubectl get pods --all-namespaces
       - echo $EKS_KUBECTL_ROLE_ARN
       - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
       - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
