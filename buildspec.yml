@@ -16,6 +16,7 @@ phases:
       - which helm
       - ls -al /usr/local/bin/helm
       - mv ./kubectl-aws_secrets /usr/local/bin/
+      - ls -al /usr/local/bin/kubectl-aws_secrets
   pre_build:
     commands:
       #- TAG="$REPOSITORY_NAME.$REPOSITORY_BRANCH.$ENVIRONMENT_NAME.$(date +%Y-%m-%d.%H.%M.%S).$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
