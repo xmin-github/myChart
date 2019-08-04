@@ -39,7 +39,7 @@ phases:
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       - cat ~/.kube/config
       - kubectl get pods --all-namespaces
-      - kubectl aws-secrets import -a xm-keytools.root.pass
+      - kubectl-aws_secrets import -a xm-keytools.root.pass
       - ./install-service.sh
 
 artifacts:
