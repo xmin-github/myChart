@@ -1,0 +1,10 @@
+name: "aws-secrets"
+version: "1.0.0"
+usage: "Import AWS Secrets Manager secrets into Kubernetes as Secret"
+description: |-
+  This plugin is used to retrieve secrets from AWS Secrets Manager and create Secret in kube
+command: "$HELM_PLUGIN_DIR/aws-secrets.sh"
+useTunnel: true
+hooks:
+  install: "$HELM_PLUGIN_DIR/install-binary.sh"
+  update: "$HELM_PLUGIN_DIR/install-binary.sh"
