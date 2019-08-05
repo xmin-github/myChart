@@ -40,6 +40,8 @@ phases:
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       - cat ~/.kube/config
+      - helm plugin install ~/.helm/plugins/aws-secrets
+      - helm plugin list
       #- kubectl get pods --all-namespaces
       #- kubectl-aws_secrets import -a xm-keytools.root.pass
       - helm aws-secrets get -a xm-keytools.root.pass
