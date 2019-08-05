@@ -41,6 +41,7 @@ phases:
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       - cat ~/.kube/config
       - export HELM_BIN=/usr/local/bin/helm
+      - ls -la /usr/local/bin
       - ~/.helm/plugins/aws-secrets/install-binary.sh
       - ls -al /usr/local/bin
       - helm plugin list
