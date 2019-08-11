@@ -12,8 +12,8 @@ phases:
       - chmod +x ./install-helm.sh
       - chmod +x ./install-service.sh
       - ./install-helm.sh
-      - which helm
-      - ls -al /usr/local/bin/helm
+      #- which helm
+      #- ls -al /usr/local/bin/helm
       #- mv ./kubectl-aws_secrets /usr/local/bin/
       #- ls -al /usr/local/bin/kubectl-aws_secrets
   pre_build:
@@ -25,10 +25,10 @@ phases:
       - helm init --upgrade --client-only
   build:
     commands:
-      - mkdir ~/.helm/plugins/aws-secrets
-      - cp ./aws-secrets-plugin/* ~/.helm/plugins/aws-secrets
-      - chmod +x  ~/.helm/plugins/aws-secrets/*.sh
-      - ls -la ./
+      #- mkdir ~/.helm/plugins/aws-secrets
+      #- cp ./aws-secrets-plugin/* ~/.helm/plugins/aws-secrets
+      #- chmod +x  ~/.helm/plugins/aws-secrets/*.sh
+      #- ls -la ./
 
   post_build:
     commands:
@@ -41,9 +41,11 @@ phases:
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       - cat ~/.kube/config
       - export HELM_BIN=/usr/local/bin/helm
-      - ~/.helm/plugins/aws-secrets/install-binary.sh
+      #- ~/.helm/plugins/aws-secrets/install-binary.
+      - helm plugin install aws-secrets-plugin
       - helm plugin list
-      - helm aws-secrets import -a xm-keytools.root.pass -f
+      - helm aws-secrets import -a xm-keytools.root.pass -s aws-secrets -u
+      - helm aws-secrets import -f cmd/secrets.yaml -u
       - ./install-service.sh
 
 artifacts:
