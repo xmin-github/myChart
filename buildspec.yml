@@ -42,7 +42,7 @@ phases:
       - cat ~/.kube/config
       - export HELM_BIN=/usr/local/bin/helm
       #- ~/.helm/plugins/aws-secrets/install-binary.
-      - helm plugin install aws-secrets-plugin
+      - helm plugin install https://github.com/xmin-github/helm-aws-secret-plugin 
       - helm plugin list
       - helm aws-secrets import -a xm-keytools.root.pass -s aws-secrets -u
       - helm aws-secrets import -f firstchart/secrets.yaml -u
