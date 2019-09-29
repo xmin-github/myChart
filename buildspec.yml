@@ -22,6 +22,7 @@ phases:
       #- sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' hello-k8s.yml
       #- $(aws ecr get-login --no-include-email)
       - export KUBECONFIG=$HOME/.kube/config
+      # Assume the helm tiller pod has been created in a previous helm init, so client-only init is needed in the build
       - helm init --upgrade --client-only
   build:
     commands:
@@ -32,12 +33,16 @@ phases:
 
   post_build:
     commands:
-      - echo $EKS_KUBECTL_ROLE_ARN
+      #- echo $EKS_KUBECTL_ROLE_ARN
+      #EKS_KUBECTL_ROLE credentials are required by my aws secret plugin to access the related aws services. This role is passed in as a CodeBuild environment variable
       - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
       - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
+      #Retrieve kube config using the role assumed by AWS CodeBuild service. This CodeBuild role also needd to be set up in aws-auth ConfigMap in EKS cluster beforehand,
+      #so that it has the access in kubernetes to deploy the app.
+      #Please note the role assumed by AWS CodeBuild is different from the one used by my aws secret plugin.
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       - cat ~/.kube/config
       - export HELM_BIN=/usr/local/bin/helm
