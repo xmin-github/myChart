@@ -22,7 +22,7 @@ phases:
       #- sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' hello-k8s.yml
       #- $(aws ecr get-login --no-include-email)
       - export KUBECONFIG=$HOME/.kube/config
-      # Assume the helm tiller pod has been created in a previous helm init, so client-only init is needed in the build
+      # Assume the helm tiller pod has already been created beforehand using helm init, so only client-only init is needed in the build
       - helm init --upgrade --client-only
   build:
     commands:
